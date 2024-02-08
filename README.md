@@ -1,10 +1,28 @@
 # Adversarial Skill Embeddings
 
-Code accompanying the paper:
-"ASE: Large-Scale Reusable Adversarial Skill Embeddings for Physically Simulated Characters" \
-(https://xbpeng.github.io/projects/ASE/index.html) \
-![Skills](images/ase_teaser.png)
+This is forked repository which I tried to implement the original paper from the scratch.
 
+
+### Milestones
+
+##### Todo
+
+1. Add a new target task to the pretrained ASE model
+2. Pretrain the ASE model with a new dataset
+
+##### Completed
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------
+# Original README.md
 
 ### Installation
 
