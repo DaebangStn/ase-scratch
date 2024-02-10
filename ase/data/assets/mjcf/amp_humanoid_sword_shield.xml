@@ -4,6 +4,11 @@
 
   <option timestep="0.00555"/>
 
+  <asset>
+      <texture name="gridtexture" type="2d" builtin="checker" width="512" height="512" rgb1="0 0 0" rgb2="1 1 1"/>
+      <material name="grid" texture="gridtexture" texrepeat="1 1" reflectance="0.2"/>
+  </asset>
+
   <default>
     <motor ctrlrange="-1 1" ctrllimited="true"/>
     <default class="body">
