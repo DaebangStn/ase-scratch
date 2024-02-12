@@ -131,18 +131,18 @@ class HumanoidPerturb(humanoid_amp.HumanoidAMP):
 
         return
 
-    def _build_body_ids_tensor(self, env_ptr, actor_handle, body_names):
-        env_ptr = self.envs[0]
-        actor_handle = self.humanoid_handles[0]
-        body_ids = []
-
-        for body_name in body_names:
-            body_id = self.gym.find_actor_rigid_body_handle(env_ptr, actor_handle, body_name)
-            assert(body_id != -1)
-            body_ids.append(body_id)
-
-        body_ids = to_torch(body_ids, device=self.device, dtype=torch.long)
-        return body_ids
+    # def _build_body_ids_tensor(self, env_ptr, actor_handle, body_names):
+    #     env_ptr = self.envs[0]
+    #     actor_handle = self.humanoid_handles[0]
+    #     body_ids = []
+    #
+    #     for body_name in body_names:
+    #         body_id = self.gym.find_actor_rigid_body_handle(env_ptr, actor_handle, body_name)
+    #         assert(body_id != -1)
+    #         body_ids.append(body_id)
+    #
+    #     body_ids = to_torch(body_ids, device=self.device, dtype=torch.long)
+    #     return body_ids
 
     def _build_proj_tensors(self):
         num_actors = self.get_num_actors_per_env()
@@ -182,12 +182,12 @@ class HumanoidPerturb(humanoid_amp.HumanoidAMP):
                                                      gymtorch.unwrap_tensor(env_ids_int32), len(env_ids_int32))
         return
 
-    def _compute_reset(self):
-        self.reset_buf[:], self._terminate_buf[:] = compute_humanoid_reset(self.reset_buf, self.progress_buf,
-                                                               self._contact_forces, self._contact_body_ids,
-                                                               self._rigid_body_pos, self.max_episode_length,
-                                                               self._enable_early_termination, self._termination_heights)
-        return
+    # def _compute_reset(self):
+    #     self.reset_buf[:], self._terminate_buf[:] = compute_humanoid_reset(self.reset_buf, self.progress_buf,
+    #                                                            self._contact_forces, self._contact_body_ids,
+    #                                                            self._rigid_body_pos, self.max_episode_length,
+    #                                                            self._enable_early_termination, self._termination_heights)
+    #     return
 
     def post_physics_step(self):
         self._update_proj()
@@ -240,23 +240,23 @@ class HumanoidPerturb(humanoid_amp.HumanoidAMP):
 
         return
 
-    def _draw_task(self):
-        super()._draw_task()
-        
-        cols = np.array([[1.0, 0.0, 0.0]], dtype=np.float32)
-
-        self.gym.clear_lines(self.viewer)
-
-        starts = self._humanoid_root_states[..., 0:3]
-        ends = self._proj_states[..., 0:3]
-        verts = torch.cat([starts, ends], dim=-1).cpu().numpy()
-
-        for i, env_ptr in enumerate(self.envs):
-            curr_verts = verts[i]
-            curr_verts = curr_verts.reshape([1, 6])
-            self.gym.add_lines(self.viewer, env_ptr, curr_verts.shape[0], curr_verts, cols)
-
-        return
+    # def _draw_task(self):
+    #     super()._draw_task()
+    #
+    #     cols = np.array([[1.0, 0.0, 0.0]], dtype=np.float32)
+    #
+    #     self.gym.clear_lines(self.viewer)
+    #
+    #     starts = self._humanoid_root_states[..., 0:3]
+    #     ends = self._proj_states[..., 0:3]
+    #     verts = torch.cat([starts, ends], dim=-1).cpu().numpy()
+    #
+    #     for i, env_ptr in enumerate(self.envs):
+    #         curr_verts = verts[i]
+    #         curr_verts = curr_verts.reshape([1, 6])
+    #         self.gym.add_lines(self.viewer, env_ptr, curr_verts.shape[0], curr_verts, cols)
+    #
+    #     return
 
 #####################################################################
 ###=========================jit functions=========================###
