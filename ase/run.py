@@ -216,10 +216,15 @@ def main():
 
     if args.minibatch_size != -1:
         cfg_train['params']['config']['minibatch_size'] = args.minibatch_size
-        
+
+    if args.log_action_file:
+        cfg_train['params']['config']['log_action_file'] = args.log_action_file
+
+    cfg_train['params']['config']['task_name'] = cfg.get('name', "")
+
     if args.motion_file:
         cfg['env']['motion_file'] = args.motion_file
-    
+
     # Create default directories for weights and statistics
     cfg_train['params']['config']['train_dir'] = args.output_path
     

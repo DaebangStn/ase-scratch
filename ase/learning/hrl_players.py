@@ -32,6 +32,7 @@ import numpy as np
 import os
 import torch 
 import yaml
+import h5py
 
 from rl_games.algos_torch import players
 from rl_games.algos_torch import torch_ext
@@ -58,7 +59,8 @@ class HRLPlayer(common_player.CommonPlayer):
         llc_checkpoint = config['llc_checkpoint']
         assert(llc_checkpoint != "")
         self._build_llc(llc_config_params, llc_checkpoint)
-        
+        self._build_action_logger()
+
         return
     
     def get_action(self, obs_dict, is_determenistic = False):
@@ -152,6 +154,9 @@ class HRLPlayer(common_player.CommonPlayer):
                 done_indices = all_done_indices[::self.num_agents]
                 done_count = len(done_indices)
                 games_played += done_count
+
+                if self._action_log is not None:
+                    self._log_action(action)
 
                 if done_count > 0:
                     if self.is_rnn:
@@ -286,3 +291,39 @@ class HRLPlayer(common_player.CommonPlayer):
     def _calc_disc_reward(self, amp_obs):
         disc_reward = self._llc_agent._calc_disc_rewards(amp_obs)
         return disc_reward
+
+    def _build_action_logger(self):
+        try:
+            if self.config.get('log_action_file', "") == "":
+                raise Exception("log_action_file is not set in the config file")
+            if self.config.get('task_name', "") == "":
+                raise Exception("task_name is not set in the config file")
+
+            action_log_file = h5py.File(self.config['log_action_file'], 'a')
+            task_name = self.config['task_name']
+
+            if task_name in action_log_file:
+                self._action_log = action_log_file[task_name]
+            else:
+                self._action_log = action_log_file.create_dataset(
+                    task_name, shape=(0, 64), maxshape=(None, 64), data=np.array([]), dtype='f4', chunks=True)
+
+            print("Action log file: {:s}".format(self.config['log_action_file']) +
+                  " with index {:s}".format(task_name))
+
+        except Exception as e:
+            print("[ERROR] Failed to build action log file: {:s}".format(str(e)))
+            self._action_log = None
+
+    def _log_action(self, action):
+        if self._action_log is None:
+            print("[ERROR] Action log file is not initialized")
+            return
+
+        action = action.cpu().numpy()
+        new_size = self._action_log.shape[0] + action.shape[0]
+        self._action_log.resize(new_size, axis=0)
+
+        self._action_log[-action.shape[0]:] = action
+
+        return

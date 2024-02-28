@@ -229,7 +229,9 @@ def get_args(benchmark=False):
             "help": "Apply additional PyTorch settings for more deterministic behaviour"},
         {"name": "--output_path", "type": str, "default": "output/", "help": "Specify output directory"},
         {"name": "--llc_checkpoint", "type": str, "default": "",
-            "help": "Path to the saved weights for the low-level controller of an HRL agent."}]
+            "help": "Path to the saved weights for the low-level controller of an HRL agent."},
+        {"name": "--log_action_file", "type": str, "default": "",
+            "help": "Log high level policy action to tensorboard"}]
 
     if benchmark:
         custom_parameters += [{"name": "--num_proc", "type": int, "default": 1, "help": "Number of child processes to launch"},
