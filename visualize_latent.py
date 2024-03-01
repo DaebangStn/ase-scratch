@@ -51,17 +51,18 @@ def apply_mds(data, n_components=2):
 
 
 #  Naive visualization of the latent space
-def visualize_naive(data, method_name, labels=None):
-    plt.figure(figsize=(8, 6))
+def visualize_naive(data, method_name, labels=None, plot_altogether=False):
     if labels is not None:
-        plt.scatter(data[:, 0], data[:, 1], cmap='viridis', s=50, alpha=0.6)
-        plt.colorbar()
+        plt.scatter(data[:, 0], data[:, 1], cmap='viridis', s=50, alpha=0.6, label=labels)
     else:
         plt.scatter(data[:, 0], data[:, 1], s=50, alpha=0.6)
-    plt.title(f'Naive Latent Space Visualization({method_name})')
+    if plot_altogether:
+        plt.title(f'Latent Space (Naive-{method_name})')
+    else:
+        plt.title(f'Latent Space for [{labels}] (Naive-{method_name})')
+
     plt.xlabel('Component 1')
     plt.ylabel('Component 2')
-    plt.show()
 
 
 #  Kernel Density Estimation (KDE) visualization of the latent space
@@ -86,13 +87,12 @@ def visualize_kde(data_2d, method_name, labels=None, vmin=0.0, vmax=0.005):
     Z = np.exp(log_dens).reshape(X.shape)
 
     # Plot KDE
-    plt.figure(figsize=(8, 6))
-    plt.contourf(X, Y, Z, cmap='viridis', levels=50, vmin=vmin, vmax=vmax)
+    # plt.contourf(X, Y, Z, cmap='viridis', levels=50, vmin=vmin, vmax=vmax)
+    plt.contourf(X, Y, Z, cmap='viridis', levels=50)
     plt.colorbar(label='Density')
     plt.title(f'Latent Space for [{labels}] (KDE-{method_name})')
     plt.xlabel('Component 1')
     plt.ylabel('Component 2')
-    plt.show(block=False)
 
 
 def build_args():
@@ -102,6 +102,10 @@ def build_args():
         {"name": "--reduce-alg", "type": str, "default": "tSNE",
          "choices": ["tSNE", "PCA", "UMAP", "LDA", "MDS"],
          "help": "Algorithm to reduce the dimensionality of the latent vectors."},
+        {"name": "--reduce-altogether", "type": bool, "default": False,
+         "help": "Reduce the dimensionality of the latent without regarding its label."},
+        {"name": "--plot-altogether", "type": bool, "default": False,
+         "help": "Plot on the single image."},
         {"name": "--visualization", "type": str, "default": "kde", "choices": ["naive", "kde"],
          "help": "Visualization method to use."}
     ]
@@ -142,10 +146,46 @@ def main():
         raise ValueError(f"Given visualization method({args.visualization}) is not supported.")
 
     with h5py.File(args.hdf5, 'r') as f:
-        for key, data in f.items():
-            data = np.array(data)
-            reduced_data = apply_reduction(data)
-            visualize(reduced_data, method_name=args.reduce_alg, labels=key)
+        total = len(f.keys())
+
+        if args.reduce_altogether:
+            all_data = []
+            labels = []
+            for key, data in f.items():
+                all_data.append(np.array(data))
+                labels.extend([key] * len(data))
+
+            concatenated_data = np.concatenate(all_data, axis=0)
+            print(f"Reducing {concatenated_data.shape} samples...")
+            reduced_data = apply_reduction(concatenated_data)
+
+            reduced_data_dict = {}
+            dict_idx = 0
+
+            for key, data in f.items():
+                end = dict_idx + len(data)
+                reduced_data_dict[key] = reduced_data[dict_idx:end]
+                dict_idx = end
+
+            for idx, (key, data) in enumerate(reduced_data_dict.items()):
+                if not args.plot_altogether:
+                    plt.figure(idx, figsize=(8, 6))
+                visualize(data, method_name=args.reduce_alg, labels=key, plot_altogether=args.plot_altogether)
+                print(f"Visualizing {key} ({idx + 1}/{total})")
+
+        else:
+            for idx, (key, data) in enumerate(f.items()):
+                data = np.array(data)
+                print(f"Reducing {data.shape} samples...")
+                reduced_data = apply_reduction(data)
+                plt.figure(idx, figsize=(8, 6))
+                visualize(reduced_data, method_name=args.reduce_alg, labels=key)
+                print(f"Visualizing {key} ({idx + 1}/{total})")
+    if args.plot_altogether:
+        plt.legend()
+    plt.show(block=False)
+    input("Press any key to continue...")
+    plt.close()
 
 
 if __name__ == "__main__":
