@@ -56,6 +56,8 @@ from learning import hrl_players
 from learning import hrl_models
 from learning import hrl_network_builder
 
+from learning import latent_duplicate_ase_players
+
 args = None
 cfg = None
 cfg_train = None
@@ -194,6 +196,8 @@ def build_alg_runner(algo_observer):
     runner.player_factory.register_builder('hrl', lambda **kwargs : hrl_players.HRLPlayer(**kwargs))
     runner.model_builder.model_factory.register_builder('hrl', lambda network, **kwargs : hrl_models.ModelHRLContinuous(network))  
     runner.model_builder.network_factory.register_builder('hrl', lambda **kwargs : hrl_network_builder.HRLBuilder())
+
+    runner.player_factory.register_builder('dup', lambda **kwargs : latent_duplicate_ase_players.ASEPlayer(**kwargs))
     
     return runner
 
