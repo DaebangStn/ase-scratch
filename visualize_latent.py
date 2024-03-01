@@ -65,7 +65,7 @@ def visualize_naive(data, method_name, labels=None):
 
 
 #  Kernel Density Estimation (KDE) visualization of the latent space
-def visualize_kde(data_2d, method_name, labels=None):
+def visualize_kde(data_2d, method_name, labels=None, vmin=0.0, vmax=0.005):
     """
     Visualizes the 2D data using Kernel Density Estimation.
 
@@ -87,12 +87,12 @@ def visualize_kde(data_2d, method_name, labels=None):
 
     # Plot KDE
     plt.figure(figsize=(8, 6))
-    plt.contourf(X, Y, Z, cmap='viridis', levels=50)
+    plt.contourf(X, Y, Z, cmap='viridis', levels=50, vmin=vmin, vmax=vmax)
     plt.colorbar(label='Density')
-    plt.title(f'KDE Latent Space Visualization({method_name})')
+    plt.title(f'Latent Space for [{labels}] (KDE-{method_name})')
     plt.xlabel('Component 1')
     plt.ylabel('Component 2')
-    plt.show()
+    plt.show(block=False)
 
 
 def build_args():
