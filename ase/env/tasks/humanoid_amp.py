@@ -235,10 +235,10 @@ class HumanoidAMP(Humanoid):
     def _init_amp_obs(self, env_ids):
         self._compute_amp_observations(env_ids)
 
-        if (len(self._reset_default_env_ids) > 0):
+        if (len(self._reset_default_env_ids) > 0):  # state init as default
             self._init_amp_obs_default(self._reset_default_env_ids)
 
-        if (len(self._reset_ref_env_ids) > 0):
+        if (len(self._reset_ref_env_ids) > 0):  # state init as demo motion
             self._init_amp_obs_ref(self._reset_ref_env_ids, self._reset_ref_motion_ids,
                                    self._reset_ref_motion_times)
         
@@ -311,7 +311,7 @@ class HumanoidAMP(Humanoid):
 ###=========================jit functions=========================###
 #####################################################################
 
-@torch.jit.script
+# @torch.jit.script
 def build_amp_observations(root_pos, root_rot, root_vel, root_ang_vel, dof_pos, dof_vel, key_body_pos, 
                            local_root_obs, root_height_obs, dof_obs_size, dof_offsets):
     # type: (Tensor, Tensor, Tensor, Tensor, Tensor, Tensor, Tensor, bool, bool, int, List[int]) -> Tensor

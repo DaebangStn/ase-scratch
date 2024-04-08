@@ -15,7 +15,7 @@
     <option name="ADD_SOURCE_ROOTS" value="true" />
     <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
     <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ase/run.py" />
-    <option name="PARAMETERS" value="--task HumanoidAMPGetup --cfg_env ase/data/cfg/humanoid_ase_sword_shield_getup_8GB.yaml --cfg_train ase/data/cfg/train/rlg/reduced_latent_ase_humanoid_8GB.yaml --motion_file ase/data/motions/reallusion_sword_shield/dataset_reallusion_sword_shield.yaml --headless" />
+    <option name="PARAMETERS" value="--test --task HumanoidAMPGetup --num_envs 4 --cfg_env ase/data/cfg/humanoid_ase_sword_shield_getup_8GB.yaml --cfg_train ase/data/cfg/train/rlg/reduced_latent_ase_humanoid_8GB.yaml --motion_file ase/data/motions/reallusion_sword_shield/RL_Avatar_Idle_Ready_Motion.npy --checkpoint output/llc_latent8_1.4G/nn/Humanoid.pth" />
     <option name="SHOW_COMMAND_LINE" value="false" />
     <option name="EMULATE_TERMINAL" value="false" />
     <option name="MODULE_MODE" value="false" />

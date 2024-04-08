@@ -1,8 +1,8 @@
 # if given, will override the device setting in gym. 
 env: 
-  numEnvs: 4096
-  envSpacing: 0.8
-  episodeLength: 100
+  numEnvs: 4
+  envSpacing: 5
+  episodeLength: 300
   isFlagrun: False
   enableDebugVis: False
   
@@ -12,19 +12,16 @@ env:
   stateInit: "Hybrid"
   hybridInitProb: 0.5
   numAMPObsSteps: 10
-  recoveryEpisodeProb: 0.2
-  recoverySteps: 60
-  fallInitProb: 0.99
   
   localRootObs: True
-  keyBodies: ["right_hand", "left_hand", "right_foot", "left_foot", "sword", "shield"]
+  keyBodies: ["right_hand", "left_hand", "right_foot", "left_foot"]
   contactBodies: ["right_foot", "left_foot"]
   terminationHeight: 0.15
   enableEarlyTermination: True
 
   asset:
     assetRoot: "ase/data/assets"
-    assetFileName: "mjcf/amp_humanoid_sword_shield.xml"
+    assetFileName: "mjcf/amp_humanoid.xml"
 
   plane:
     staticFriction: 1.0

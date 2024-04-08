@@ -1,8 +1,8 @@
 # if given, will override the device setting in gym. 
 env: 
-  numEnvs: 4096
-  envSpacing: 0.8
-  episodeLength: 100
+  numEnvs: 4
+  envSpacing: 5
+  episodeLength: 300
   isFlagrun: False
   enableDebugVis: False
   
@@ -14,7 +14,7 @@ env:
   numAMPObsSteps: 10
   recoveryEpisodeProb: 0.2
   recoverySteps: 60
-  fallInitProb: 0.99
+  fallInitProb: 0.8
   
   localRootObs: True
   keyBodies: ["right_hand", "left_hand", "right_foot", "left_foot", "sword", "shield"]

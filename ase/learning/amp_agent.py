@@ -601,6 +601,7 @@ class AMPAgent(common_agent.CommonAgent):
             prob = 1 / (1 + torch.exp(-disc_logits)) 
             disc_r = -torch.log(torch.maximum(1 - prob, torch.tensor(0.0001, device=self.ppo_device)))
             disc_r *= self._disc_reward_scale
+            # print("disc_pred: ", disc_logits, disc_r)
 
         return disc_r
 
@@ -653,5 +654,5 @@ class AMPAgent(common_agent.CommonAgent):
 
             disc_pred = disc_pred.detach().cpu().numpy()[0, 0]
             disc_reward = disc_reward.cpu().numpy()[0, 0]
-            print("disc_pred: ", disc_pred, disc_reward)
+            # print("disc_pred: ", disc_pred, disc_reward)
         return
