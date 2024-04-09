@@ -73,7 +73,6 @@ params:
     grad_norm: 1.0
     entropy_coef: 0.0
     truncate_grads: False
-    ppo: True
     e_clip: 0.2
     horizon_length: 32
     minibatch_size: 16384

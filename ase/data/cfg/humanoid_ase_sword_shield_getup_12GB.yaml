@@ -2,7 +2,7 @@
 env: 
   numEnvs: 4096
   envSpacing: 1
-  episodeLength: 300
+  episodeLength: 1200
   isFlagrun: False
   enableDebugVis: False
   
