@@ -1,0 +1,21 @@
+motions:
+  - file: "RL_Avatar_WalkForward01_Motion.npy"
+    weight: 2
+#  - file: "RL_Avatar_WalkForward02_Motion.npy"
+#    weight: 2
+  - file: "RL_Avatar_WalkLeft01_Motion.npy"
+    weight: 2
+#  - file: "RL_Avatar_WalkLeft02_Motion.npy"
+#    weight: 2
+  - file: "RL_Avatar_WalkRight01_Motion.npy"
+    weight: 2
+#  - file: "RL_Avatar_WalkRight02_Motion.npy"
+#    weight: 2
+  - file: "RL_Avatar_WalkBackward01_Motion.npy"
+    weight: 2
+#  - file: "RL_Avatar_WalkBackward02_Motion.npy"
+#    weight: 2
+#  - file: "RL_Avatar_Fall_Left_Motion.npy"
+#    weight: 1
+#  - file: "RL_Avatar_Fall_Right_Motion.npy"
+#    weight: 1

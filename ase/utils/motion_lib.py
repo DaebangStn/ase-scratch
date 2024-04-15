@@ -184,7 +184,6 @@ class MotionLib():
         for v in vals:
             assert v.dtype != torch.float64
 
-
         blend = blend.unsqueeze(-1)
 
         root_pos = (1.0 - blend) * root_pos0 + blend * root_pos1

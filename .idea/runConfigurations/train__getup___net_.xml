@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="train (getup) (net)" type="PythonConfigurationType" factoryName="Python">
+  <configuration default="false" name="train (getup) (net)" type="PythonConfigurationType" factoryName="Python" folderName="deprecated">
     <module name="ase-scratch" />
     <option name="ENV_FILES" value="" />
     <option name="INTERPRETER_OPTIONS" value="" />
@@ -15,7 +15,7 @@
     <option name="ADD_SOURCE_ROOTS" value="true" />
     <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
     <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ase/run.py" />
-    <option name="PARAMETERS" value="--task HumanoidAMPGetup --cfg_env ase/data/cfg/humanoid_ase_sword_shield_getup_12GB.yaml --cfg_train ase/data/cfg/train/rlg/reduced_net_ase_humanoid_2060.yaml --motion_file ase/data/motions/reallusion_sword_shield/dataset_reallusion_sword_shield.yaml --headless" />
+    <option name="PARAMETERS" value="--test --task HumanoidAMPGetup --num_envs 16 --cfg_env ase/data/cfg/humanoid_ase_sword_shield_getup_12GB.yaml --cfg_train ase/data/cfg/train/rlg/reduced_net_ase_humanoid_2060.yaml --motion_file ase/data/motions/reallusion_sword_shield/dataset_reallusion_sword_shield.yaml --resume 1 --checkpoint output/llc_reduced_net_1.8G/nn/Humanoid.pth" />
     <option name="SHOW_COMMAND_LINE" value="false" />
     <option name="EMULATE_TERMINAL" value="false" />
     <option name="MODULE_MODE" value="false" />

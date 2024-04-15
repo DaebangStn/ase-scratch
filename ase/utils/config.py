@@ -167,7 +167,7 @@ def parse_sim_params(args, cfg, cfg_train):
         sim_params.physx.num_threads = 4
         sim_params.physx.use_gpu = args.use_gpu
         sim_params.physx.num_subscenes = args.subscenes
-        sim_params.physx.max_gpu_contact_pairs = 8 * 1024 * 1024
+        # sim_params.physx.max_gpu_contact_pairs = 8 * 1024 * 1024
 
     sim_params.use_gpu_pipeline = args.use_gpu_pipeline
     sim_params.physx.use_gpu = args.use_gpu

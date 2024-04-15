@@ -26,6 +26,8 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+from matplotlib import pyplot
+
 from rl_games.algos_torch.running_mean_std import RunningMeanStd
 from rl_games.algos_torch import torch_ext
 from rl_games.common import a2c_common
@@ -139,8 +141,8 @@ class AMPAgent(common_agent.CommonAgent):
             self.current_lengths = self.current_lengths * not_dones
             
             if (self.vec_env.env.task.viewer):
-                self._amp_debug(infos)
-                
+                # self._amp_debug(infos)
+                pass
             done_indices = done_indices[:, 0]
 
         mb_fdones = self.experience_buffer.tensor_dict['dones'].float()
@@ -472,6 +474,7 @@ class AMPAgent(common_agent.CommonAgent):
         disc_loss_agent = self._disc_loss_neg(disc_agent_logit)
         disc_loss_demo = self._disc_loss_pos(disc_demo_logit)
         disc_loss = 0.5 * (disc_loss_agent + disc_loss_demo)
+        pred_loss = disc_loss.clone().detach()
 
         # logit reg
         logit_weights = self.model.a2c_network.get_disc_logit_weights()
@@ -494,6 +497,7 @@ class AMPAgent(common_agent.CommonAgent):
             disc_loss += self._disc_weight_decay * disc_weight_decay
 
         disc_agent_acc, disc_demo_acc = self._compute_disc_acc(disc_agent_logit, disc_demo_logit)
+        self.writer.add_scalar('losses/pred_loss', pred_loss, self.frame)
 
         disc_info = {
             'disc_loss': disc_loss,
@@ -602,6 +606,9 @@ class AMPAgent(common_agent.CommonAgent):
             disc_r = -torch.log(torch.maximum(1 - prob, torch.tensor(0.0001, device=self.ppo_device)))
             disc_r *= self._disc_reward_scale
             # print("disc_pred: ", disc_logits, disc_r)
+
+            # self.writer.add_histogram('disc', disc_logits, self.frame)
+            # self.writer.add_histogram('disc_rew', disc_r, self.frame)
 
         return disc_r
 

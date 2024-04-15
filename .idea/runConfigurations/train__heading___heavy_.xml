@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="train (heading) (heavy)" type="PythonConfigurationType" factoryName="Python">
+  <configuration default="false" name="train (heading) (heavy)" type="PythonConfigurationType" factoryName="Python" folderName="deprecated">
     <module name="ase-scratch" />
     <option name="ENV_FILES" value="" />
     <option name="INTERPRETER_OPTIONS" value="" />

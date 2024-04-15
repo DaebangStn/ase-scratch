@@ -550,7 +550,7 @@ class Humanoid(BaseTask):
 ###=========================jit functions=========================###
 #####################################################################
 
-# @torch.jit.script
+@torch.jit.script
 def dof_to_obs(pose, dof_obs_size, dof_offsets):
     # type: (Tensor, int, List[int]) -> Tensor
     joint_obs_size = 6
@@ -682,7 +682,7 @@ def compute_humanoid_reward(obs_buf):
     return reward
 
 
-# @torch.jit.script
+@torch.jit.script
 def compute_humanoid_reset(reset_buf, progress_buf, contact_buf, contact_body_ids, rigid_body_pos,
                            max_episode_length, enable_early_termination, termination_heights):
     # type: (Tensor, Tensor, Tensor, Tensor, Tensor, float, bool, Tensor) -> Tuple[Tensor, Tensor]
