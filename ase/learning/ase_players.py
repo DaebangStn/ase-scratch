@@ -27,12 +27,19 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import torch
+import time
+import matplotlib.pyplot as plt
 
 from isaacgym.torch_utils import *
 from rl_games.algos_torch import players
 
 from learning import amp_players
 from learning import ase_network_builder
+from learning.logger.motionTransition import MotionTransitionLogger
+from learning.logger.matcher import Matcher
+from utils.buffer import TensorHistoryFIFO
+from utils.angle import calc_heading_quat_inv, quat_rotate
+
 
 class ASEPlayer(amp_players.AMPPlayerContinuous):
     def __init__(self, config):
@@ -42,6 +49,10 @@ class ASEPlayer(amp_players.AMPPlayerContinuous):
 
         self._enc_reward_scale = config['enc_reward_scale']
 
+        self._matcher = None
+        self._matcher_obs_buf = None
+        self._transition_logger = None
+
         super().__init__(config)
         
         if (hasattr(self, 'env')):
@@ -50,6 +61,22 @@ class ASEPlayer(amp_players.AMPPlayerContinuous):
             batch_size = self.env_info['num_envs']
         self._ase_latents = torch.zeros((batch_size, self._latent_dim), dtype=torch.float32,
                                          device=self.device)
+
+        logger_config = self.config.get('logger', None)
+        if logger_config is not None:
+            log_latent = logger_config.get('latent_motion_id', False)
+            motion_transition = logger_config.get('motion_transition', False)
+            if log_latent or motion_transition:
+                show_matcher_out = logger_config.get('show_matcher_out', False)
+
+                self._matcher_obs_buf = TensorHistoryFIFO(self.env.task.amp_obs_size)
+
+                plt.switch_backend('TkAgg')  # Since pycharm IDE embeds matplotlib, it is necessary to switch backend
+                self._matcher = Matcher(self.env.task.motion_lib, self.env.task.amp_obs_size, self.env.task.dt, self.device,
+                                        show_matcher_out)
+                self._transition_logger = (
+                    MotionTransitionLogger(logger_config['filename'], time.strftime("%Y%m%d-%H%M%S"),
+                                           self.env.task.num_envs))
 
         return
 
@@ -86,9 +113,21 @@ class ASEPlayer(amp_players.AMPPlayerContinuous):
         current_action = current_action.detach()
         return  players.rescale_actions(self.actions_low, self.actions_high, torch.clamp(current_action, -1.0, 1.0))
 
+    def env_step(self, env, actions):
+        obs, rew, done, info = super().env_step(env, actions)
+        if self._transition_logger:
+            self._matcher_obs_buf.push(self.env.task.matcher_obs())
+            motion_id = self._matcher.match(self._matcher_obs_buf.history)
+            self._transition_logger.log(motion_id)
+        return obs, rew, done, info
+
     def env_reset(self, env_ids=None):
         obs = super().env_reset(env_ids)
         self._reset_latents(env_ids)
+        if self._transition_logger:
+            resets = torch.zeros(self.env.task.num_envs, dtype=torch.bool, device=self.device)
+            resets[env_ids] = True
+            self._matcher_obs_buf.push_on_reset(self.env.task.matcher_obs(), resets)
         return obs
     
     def _build_net_config(self):
@@ -108,15 +147,17 @@ class ASEPlayer(amp_players.AMPPlayerContinuous):
         return
 
     def _update_latents(self):
-        if (self._latent_step_count <= 0):
+        if self._latent_step_count <= 0:
             self._reset_latents()
             self._reset_latent_step_count()
 
-            if (self.env.task.viewer):
+            num_envs = self.env.task.num_envs
+            env_ids = to_torch(np.arange(num_envs), dtype=torch.long, device=self.device)
+            if self.env.task.viewer:
                 print("Sampling new amp latents------------------------------")
-                num_envs = self.env.task.num_envs
-                env_ids = to_torch(np.arange(num_envs), dtype=torch.long, device=self.device)
                 self._change_char_color(env_ids)
+            if self._transition_logger:
+                self._transition_logger.update_z(env_ids)
         else:
             self._latent_step_count -= 1
         return

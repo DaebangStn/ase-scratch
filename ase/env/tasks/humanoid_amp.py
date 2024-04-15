@@ -27,15 +27,9 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 from enum import Enum
-import numpy as np
-import torch
-
-from isaacgym import gymapi
-from isaacgym import gymtorch
 
 from env.tasks.humanoid import Humanoid, dof_to_obs
-from utils import gym_util
-from utils.motion_lib import MotionLib
+from poselib.poselib.motion_lib import MotionLib
 from isaacgym.torch_utils import *
 
 from utils import torch_utils
@@ -306,6 +300,13 @@ class HumanoidAMP(Humanoid):
                                                                    self._dof_obs_size, self._dof_offsets)
         return
 
+    @property
+    def motion_lib(self):
+        return self._motion_lib
+
+    @property
+    def amp_obs_size(self):
+        return self._num_amp_obs_steps
 
 #####################################################################
 ###=========================jit functions=========================###

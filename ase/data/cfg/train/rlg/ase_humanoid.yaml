@@ -51,6 +51,15 @@ params:
   load_checkpoint: False
 
   config:
+    logger:
+      show_matcher_out: False
+      action: False
+      latent_motion_id: False
+      motion_transition: True
+      filename:
+        plot_ase
+#        dummy
+
     name: Humanoid
     env_name: rlgpu
     multi_gpu: False
@@ -73,7 +82,6 @@ params:
     grad_norm: 1.0
     entropy_coef: 0.0
     truncate_grads: False
-    ppo: True
     e_clip: 0.2
     horizon_length: 32
     minibatch_size: 4096
@@ -96,9 +104,11 @@ params:
     enable_eps_greedy: True
 
     latent_dim: 64
-    latent_steps_min: 1
-    latent_steps_max: 150
-    
+    latent_steps_min: 200
+    latent_steps_max: 210
+#    latent_steps_min: 1
+#    latent_steps_max: 150
+
     amp_latent_grad_bonus: 0.00
     amp_latent_grad_bonus_max: 100.0
     amp_diversity_bonus: 0.01

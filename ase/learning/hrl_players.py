@@ -201,7 +201,7 @@ class HRLPlayer(common_player.CommonPlayer):
 
     def env_step(self, env, obs_dict, action):
         if not self.is_tensor_obses:
-            actions = actions.cpu().numpy()
+            actions = action.cpu().numpy()
             
         obs = obs_dict['obs']
         rewards = 0.0

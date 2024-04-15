@@ -26,15 +26,16 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import numpy as np
 import os
 import torch
+import numpy as np
 
 from isaacgym import gymtorch
 from isaacgym import gymapi
 from isaacgym.torch_utils import *
 
 from utils import torch_utils
+from utils.angle import calc_heading_quat_inv, quat_rotate
 
 from env.tasks.base_task import BaseTask
 
@@ -480,6 +481,10 @@ class Humanoid(BaseTask):
         super().render(sync_frame_time)
         return
 
+    def matcher_obs(self):
+        return compute_matcher_obs(self._rigid_body_pos, self._rigid_body_rot, self._rigid_body_vel,
+                                   self._rigid_body_ang_vel, self._dof_pos, self._dof_vel, self._key_body_ids)
+
     def _build_key_body_ids_tensor(self, key_body_names):
         env_ptr = self.envs[0]
         actor_handle = self.humanoid_handles[0]
@@ -709,3 +714,31 @@ def compute_humanoid_reset(reset_buf, progress_buf, contact_buf, contact_body_id
     reset = torch.where(progress_buf >= max_episode_length - 1, torch.ones_like(reset_buf), terminated)
 
     return reset, terminated
+
+
+@torch.jit.script
+def compute_matcher_obs(r_pos: torch.Tensor, r_rot: torch.Tensor, r_vel: torch.Tensor, r_ang_vel: torch.Tensor,
+                        dof_pos: torch.Tensor, dof_vel: torch.Tensor, key_body_ids: torch.Tensor) -> torch.Tensor:
+    # returns: root_h, local_root_vel/anVel, dof_pos, dof_vel, local_keypoint_pos
+    # dim:     1 +     3*2 +                 31[28] + 31[28] + 3 * 6[4]          = 87[75]
+
+    root_h = r_pos[:, 0, 2:3]  # dim0: num_env, dim1: 1
+
+    inv_heading_rot = calc_heading_quat_inv(r_rot[:, 0])  # dim0: num_env, dim1: 4
+    local_root_vel = quat_rotate(inv_heading_rot, r_vel[:, 0])  # dim0: num_env, dim1: 3
+    local_root_anVel = quat_rotate(inv_heading_rot, r_ang_vel[:, 0])  # dim0: num_env, dim1: 3
+
+    local_rBody_pos = r_pos - r_pos[:, 0:1]  # dim0: num_env, dim1: number of rBody, dim2: 3
+
+    # dim0: num_env, dim1: number of rBody, dim2: 4
+    inv_heading_rot_exp = inv_heading_rot.unsqueeze(1).repeat(1, local_rBody_pos.shape[1], 1)
+
+    # dim0: num_env * number of rBody, dim1: 4
+    flat_inv_heading_rot_exp = inv_heading_rot_exp.view(-1, inv_heading_rot_exp.shape[-1])
+    # dim0: num_env * number of rBody, dim1: 3
+    flat_local_rBody_pos = local_rBody_pos.view(-1, local_rBody_pos.shape[-1])
+    local_rBody_pos = quat_rotate(flat_inv_heading_rot_exp, flat_local_rBody_pos).view(local_rBody_pos.shape)
+    local_keypoint_pos = local_rBody_pos[:, key_body_ids]
+
+    return torch.cat([root_h, local_root_vel, local_root_anVel, dof_pos, dof_vel, local_keypoint_pos.flatten(1)],
+                     dim=-1)

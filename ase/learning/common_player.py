@@ -98,15 +98,15 @@ class CommonPlayer(players.PpoPlayerContinuous):
                     action = self.get_masked_action(obs_dict, masks, is_determenistic)
                 else:
                     action = self.get_action(obs_dict, is_determenistic)
-                obs_dict, r, done, info =  self.env_step(self.env, action)
+                obs_dict, r, done, info = self.env_step(self.env, action)
                 cr += r
                 steps += 1
   
                 self._post_step(info)
 
-                if render:
-                    self.env.render(mode = 'human')
-                    time.sleep(self.render_sleep)
+                # if render:
+                #     self.env.render(mode='human')
+                #     time.sleep(self.render_sleep)
 
                 all_done_indices = done.nonzero(as_tuple=False)
                 done_indices = all_done_indices[::self.num_agents]
