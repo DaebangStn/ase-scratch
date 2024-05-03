@@ -334,6 +334,8 @@ class Humanoid(BaseTask):
         if (self._pd_control):
             dof_prop = self.gym.get_asset_dof_properties(humanoid_asset)
             dof_prop["driveMode"] = gymapi.DOF_MODE_POS
+            dof_prop["stiffness"] = dof_prop["stiffness"] * 1.0
+            dof_prop["damping"] = dof_prop["damping"] * 1.5
             self.gym.set_actor_dof_properties(env_ptr, humanoid_handle, dof_prop)
 
         self.humanoid_handles.append(humanoid_handle)
