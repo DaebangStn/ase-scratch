@@ -55,7 +55,7 @@ params:
       show_matcher_out: False
       action: False
       latent_motion_id: False
-      motion_transition: True
+      motion_transition: False
       filename:
         plot_ase
 #        dummy
@@ -84,7 +84,7 @@ params:
     truncate_grads: False
     e_clip: 0.2
     horizon_length: 32
-    minibatch_size: 4096
+    minibatch_size: 8192
     mini_epochs: 6
     critic_coef: 5
     clip_value: False
@@ -93,8 +93,8 @@ params:
     amp_obs_demo_buffer_size: 100000
     amp_replay_buffer_size: 100000
     amp_replay_keep_prob: 0.01
-    amp_batch_size: 512
-    amp_minibatch_size: 1024
+    amp_batch_size: 128
+    amp_minibatch_size: 512
     disc_coef: 5
     disc_logit_reg: 0.01
     disc_grad_penalty: 5
@@ -104,10 +104,10 @@ params:
     enable_eps_greedy: True
 
     latent_dim: 64
-    latent_steps_min: 200
-    latent_steps_max: 210
-#    latent_steps_min: 1
-#    latent_steps_max: 150
+#    latent_steps_min: 200
+#    latent_steps_max: 210
+    latent_steps_min: 1
+    latent_steps_max: 150
 
     amp_latent_grad_bonus: 0.00
     amp_latent_grad_bonus_max: 100.0
