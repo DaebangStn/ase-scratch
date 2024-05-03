@@ -400,15 +400,9 @@ class AMPAgent(common_agent.CommonAgent):
             self.scaler.step(self.optimizer)
             self.scaler.update()
 
-        with torch.no_grad():
-            reduce_kl = not self.is_rnn
-            kl_dist = torch_ext.policy_kl(mu.detach(), sigma.detach(), old_mu_batch, old_sigma_batch, reduce_kl)
-            if self.is_rnn:
-                kl_dist = (kl_dist * rnn_masks).sum() / rnn_masks.numel()  #/ sum_mask
-                    
         self.train_result = {
             'entropy': entropy,
-            'kl': kl_dist,
+            'kl': self._policy_kl(mu, sigma, old_mu_batch, old_sigma_batch),
             'last_lr': self.last_lr, 
             'lr_mul': lr_mul, 
             'b_loss': b_loss
@@ -418,6 +412,12 @@ class AMPAgent(common_agent.CommonAgent):
         self.train_result.update(disc_info)
 
         return
+
+    def _policy_kl(self, mu, sigma, old_mu, old_sigma):
+        with torch.no_grad():
+            kl = ((mu - old_mu) ** 2) / (2 * old_sigma ** 2 + 1e-7)
+            kl = kl.sum(dim=-1).mean()
+            return kl
 
     def _load_config_params(self, config):
         super()._load_config_params(config)
