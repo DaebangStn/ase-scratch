@@ -400,6 +400,8 @@ class AMPAgent(common_agent.CommonAgent):
             self.scaler.step(self.optimizer)
             self.scaler.update()
 
+        self.writer.add_scalar('losses/total_loss', loss.detach().item(), self.frame)
+
         self.train_result = {
             'entropy': entropy,
             'kl': self._policy_kl(mu, sigma, old_mu_batch, old_sigma_batch),
