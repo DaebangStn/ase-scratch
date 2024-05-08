@@ -1,8 +1,8 @@
 # if given, will override the device setting in gym. 
 env: 
-  numEnvs: 512
-  envSpacing: 2
-  episodeLength: 300
+  numEnvs: 2048
+  envSpacing: 5
+  episodeLength: 1200
   isFlagrun: False
   enableDebugVis: False
   
@@ -12,9 +12,9 @@ env:
   stateInit: "Hybrid"
   hybridInitProb: 0.5
   numAMPObsSteps: 10
-  recoveryEpisodeProb: 0.2
+  recoveryEpisodeProb: 0.0
   recoverySteps: 60
-  fallInitProb: 0.1
+  fallInitProb: 0.0
   
   localRootObs: True
   keyBodies: ["right_hand", "left_hand", "right_foot", "left_foot", "sword", "shield"]
@@ -42,7 +42,7 @@ sim:
     rest_offset: 0.0
     bounce_threshold_velocity: 0.2
     max_depenetration_velocity: 10.0
-#    default_buffer_size_multiplier: 10.0
+    default_buffer_size_multiplier: 1.2
 
   flex:
     num_inner_iterations: 10

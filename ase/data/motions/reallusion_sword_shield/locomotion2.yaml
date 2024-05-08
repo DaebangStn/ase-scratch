@@ -1,0 +1,5 @@
+motions:
+  - file: "RL_Avatar_WalkForward01_Motion.npy"
+    weight: 1
+  - file: "RL_Avatar_WalkLeft01_Motion.npy"
+    weight: 1

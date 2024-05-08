@@ -115,8 +115,8 @@ class ASEAgent(amp_agent.AMPAgent):
             self.current_rewards = self.current_rewards * not_dones.unsqueeze(1)
             self.current_lengths = self.current_lengths * not_dones
         
-            if (self.vec_env.env.task.viewer):
-                self._amp_debug(infos, self._ase_latents)
+            # if (self.vec_env.env.task.viewer):
+            #     self._amp_debug(infos, self._ase_latents)
 
             done_indices = done_indices[:, 0]
 
