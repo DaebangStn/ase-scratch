@@ -24,7 +24,7 @@ params:
         learn_sigma: False
 
     mlp:
-      units: [1024, 1024, 512]
+      units: [1024, 512]
       activation: relu
       d2rl: False
 
@@ -34,7 +34,7 @@ params:
         name: None
 
     disc:
-      units: [1024, 1024, 512]
+      units: [1024, 512]
       activation: relu
 
       initializer:
