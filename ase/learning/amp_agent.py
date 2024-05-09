@@ -457,10 +457,9 @@ class AMPAgent(common_agent.CommonAgent):
         num_envs = self.vec_env.env.task.num_envs
         env_ids = to_torch(np.arange(num_envs), dtype=torch.float32, device=self.ppo_device)
 
-        # self._rand_action_probs = 1.0 - torch.exp(10 * (env_ids / (num_envs - 1.0) - 1.0))
-        # self._rand_action_probs[0] = 1.0
-        # self._rand_action_probs[-1] = 0.0
-        self._rand_action_probs = torch.ones(num_envs, dtype=torch.float32, device=self.ppo_device)
+        self._rand_action_probs = 1.0 - torch.exp(10 * (env_ids / (num_envs - 1.0) - 1.0))
+        self._rand_action_probs[0] = 1.0
+        self._rand_action_probs[-1] = 0.0
 
         if not self._enable_eps_greedy:
             self._rand_action_probs[:] = 1.0
