@@ -96,7 +96,10 @@ class CommonAgent(a2c_continuous.A2CAgent):
         self.use_experimental_cv = self.config.get('use_experimental_cv', True)
         self.dataset = amp_datasets.AMPDataset(self.batch_size, self.minibatch_size, self.is_discrete, self.is_rnn, self.ppo_device, self.seq_len)
         self.algo_observer.after_init(self)
-        
+
+        self.int_save_freq = self.config.get('intermediate_save_frequency', 100)
+        self._prev_int_ckpt_path = None
+
         return
 
     def init_tensors(self):
@@ -156,9 +159,9 @@ class CommonAgent(a2c_continuous.A2CAgent):
                     mean_lengths = self.game_lengths.get_mean()
 
                     for i in range(self.value_size):
-                        self.writer.add_scalar('rewards{0}/frame'.format(i), mean_rewards[i], frame)
-                        self.writer.add_scalar('rewards{0}/iter'.format(i), mean_rewards[i], epoch_num)
-                        self.writer.add_scalar('rewards{0}/time'.format(i), mean_rewards[i], total_time)
+                        self.writer.add_scalar('rewards/frame'.format(i), mean_rewards[i], frame)
+                        self.writer.add_scalar('rewards/iter'.format(i), mean_rewards[i], epoch_num)
+                        self.writer.add_scalar('rewards/time'.format(i), mean_rewards[i], total_time)
 
                     self.writer.add_scalar('episode_lengths/frame', mean_lengths, frame)
                     self.writer.add_scalar('episode_lengths/iter', mean_lengths, epoch_num)
@@ -166,13 +169,21 @@ class CommonAgent(a2c_continuous.A2CAgent):
                     if self.has_self_play_config:
                         self.self_play_manager.update(self)
 
-                if self.save_freq > 0:
-                    if (epoch_num % self.save_freq == 0):
-                        self.save(model_output_file)
+                    checkpoint_name = self.config['name'] + '_ep_' + str(epoch_num) + '_rew_' + str(mean_rewards[0])
 
-                        if (self._save_intermediate):
-                            int_model_output_file = model_output_file + '_' + str(epoch_num).zfill(8)
-                            self.save(int_model_output_file)
+                    if self.save_freq > 0:
+                        if epoch_num % self.save_freq == 0:
+                            self.save(os.path.join(self.nn_dir, 'last_' + checkpoint_name))
+                        if epoch_num % self.int_save_freq == 0:
+                            if self._prev_int_ckpt_path is not None:
+                                os.remove(self._prev_int_ckpt_path + '.pth')
+                            self._prev_int_ckpt_path = os.path.join(self.nn_dir, checkpoint_name + f'_{epoch_num}')
+                            self.save(self._prev_int_ckpt_path)
+
+                    if mean_rewards[0] > self.last_mean_rewards and epoch_num >= self.save_best_after:
+                        print('saving next best rewards: ', mean_rewards)
+                        self.last_mean_rewards = mean_rewards[0]
+                        self.save(os.path.join(self.nn_dir, self.config['name']))
 
                 if epoch_num > self.max_epochs:
                     self.save(model_output_file)
