@@ -55,7 +55,7 @@ params:
       show_matcher_out: False
       action: False
       latent_motion_id: False
-      motion_transition: False
+      motion_transition: True
       filename:
         plot_ase
 #        dummy

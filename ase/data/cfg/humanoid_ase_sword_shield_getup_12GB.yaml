@@ -27,8 +27,8 @@ env:
     assetFileName: "mjcf/amp_humanoid_sword_shield.xml"
 
   plane:
-    staticFriction: 0.5
-    dynamicFriction: 0.5
+    staticFriction: 1.0
+    dynamicFriction: 1.0
     restitution: 0.0
 
 sim:
