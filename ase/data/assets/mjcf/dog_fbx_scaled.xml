@@ -1,0 +1,233 @@
+<mujoco model="dog">
+    <compiler angle="degree" inertiafromgeom="true" />
+    <option iterations="50" solver="PGS" timestep="0.002" />
+    
+    <default>
+        <joint armature="0.01" damping="20" limited="true" stiffness="200" type="hinge" />
+        <geom conaffinity="1" condim="3" contype="1" density="100" rgba=".8 .6 .4 1" />
+        <motor ctrllimited="true" ctrlrange="-180 180" />
+    </default>
+
+    <asset>
+        <texture builtin="checker" height="512" name="gridtexture" rgb1="1 0 0" rgb2="0 1 0" type="2d" width="512" />
+        <material name="grid" reflectance="0.2" texrepeat="1 1" texture="gridtexture" />
+    </asset>
+
+    <worldbody>
+        <geom conaffinity="1" material="grid" name="floor" size="1.8 1.8 0.00012" type="plane" />
+        <body name="Hips" pos="0.0 0.0 0.12">
+            <freejoint name="root" />
+            <body name="Spine" pos="0.0 0.0 0.0">
+                <joint axis="1 0 0" name="spine_x" range="-180 180" />
+                <joint axis="0 1 0" name="spine_y" range="-180 180" />
+                <joint axis="0 0 1" name="spine_z" range="-180 180" />
+                <geom fromto="0.0 0.0 0.0 0.0 0.228 0.0" size="0.036000000000000004" type="capsule" />
+                
+                <body name="Spine1" pos="0.0 0.228 0.0">
+                    <joint axis="1 0 0" name="spine1_x" range="-180 180" />
+                    <joint axis="0 1 0" name="spine1_y" range="-180 180" />
+                    <joint axis="0 0 1" name="spine1_z" range="-180 180" />
+                    <geom fromto="0.0 0.0 0.0 0.0276 0.2688 0.0" size="0.036000000000000004" type="capsule" />
+                    
+                    <body name="Neck" pos="0.0276 0.2688 0.0">
+                        <joint axis="1 0 0" name="neck_x" range="-180 180" />
+                        <joint axis="0 1 0" name="neck_y" range="-180 180" />
+                        <joint axis="0 0 1" name="neck_z" range="-180 180" />
+                        <geom fromto="0.0 0.0 0.0 0.0 0.168 0.0" size="0.018000000000000002" type="capsule" />
+                        
+                        <body name="Head" pos="0.0 0.168 0.0">
+                            <joint axis="1 0 0" name="head_x" range="-180 180" />
+                            <joint axis="0 1 0" name="head_y" range="-180 180" />
+                            <joint axis="0 0 1" name="head_z" range="-180 180" />
+                            <geom size="0.07200000000000001" type="sphere" />
+                        </body>
+                    </body>
+                    
+                    <geom fromto="0.0 0.0 0.0 -0.013200000000000002 0.24120000000000003 0.0516" size="0.018000000000000002" type="capsule" />
+                    <body name="LeftShoulder" pos="-0.013200000000000002 0.24120000000000003 0.0516">
+                        <joint axis="1 0 0" name="leftshoulder_x" range="-180 180" />
+                        <joint axis="0 1 0" name="leftshoulder_y" range="-180 180" />
+                        <joint axis="0 0 1" name="leftshoulder_z" range="-180 180" />
+                        <geom fromto="0.0 0.0 0.0 0.0 0.096 0.0" size="0.018000000000000002" type="capsule" />
+                        
+                        <body name="LeftArm" pos="0.0 0.096 0.0">
+                            <joint axis="1 0 0" name="leftarm_x" range="-180 180" />
+                            <joint axis="0 1 0" name="leftarm_y" range="-180 180" />
+                            <joint axis="0 0 1" name="leftarm_z" range="-180 180" />
+                            <geom fromto="0.0 0.0 0.0 0.0 0.1824 0.0" size="0.018000000000000002" type="capsule" />
+                            
+                            <body name="LeftForeArm" pos="0.0 0.1824 0.0">
+                                <joint axis="1 0 0" name="leftforearm_x" range="-180 180" />
+                                <joint axis="0 1 0" name="leftforearm_y" range="-180 180" />
+                                <joint axis="0 0 1" name="leftforearm_z" range="-180 180" />
+                                <geom fromto="0.0 0.0 0.0 0.0 0.2136 0.0" size="0.018000000000000002" type="capsule" />
+                                
+                                <body name="LeftHand" pos="0.0 0.2136 0.0">
+                                    <joint axis="1 0 0" name="lefthand_x" range="-180 180" />
+                                    <joint axis="0 1 0" name="lefthand_y" range="-180 180" />
+                                    <joint axis="0 0 1" name="lefthand_z" range="-180 180" />
+                                    <geom fromto="0.0 0.0 0.0 0.0 0.0864 0.0" size="0.018000000000000002" type="capsule" />
+                                    <geom pos="0.0 0.07200000000000001 0.0" size="0.036000000000000004" type="sphere" />
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+                    
+                    <geom fromto="0.0 0.0 0.0 -0.013200000000000002 0.24120000000000003 -0.0516" size="0.018000000000000002" type="capsule" />
+                    <body name="RightShoulder" pos="-0.013200000000000002 0.24120000000000003 -0.0516">
+                        <joint axis="1 0 0" name="rightshoulder_x" range="-180 180" />
+                        <joint axis="0 1 0" name="rightshoulder_y" range="-180 180" />
+                        <joint axis="0 0 1" name="rightshoulder_z" range="-180 180" />
+                        <geom fromto="0.0 0.0 0.0 0.0 0.096 0.0" size="0.018000000000000002" type="capsule" />
+                        
+                        <body name="RightArm" pos="0.0 0.096 0.0">
+                            <joint axis="1 0 0" name="rightarm_x" range="-180 180" />
+                            <joint axis="0 1 0" name="rightarm_y" range="-180 180" />
+                            <joint axis="0 0 1" name="rightarm_z" range="-180 180" />
+                            <geom fromto="0.0 0.0 0.0 0.0 0.1824 0.0" size="0.018000000000000002" type="capsule" />
+                            
+                            <body name="RightForeArm" pos="0.0 0.1824 0.0">
+                                <joint axis="1 0 0" name="rightforearm_x" range="-180 180" />
+                                <joint axis="0 1 0" name="rightforearm_y" range="-180 180" />
+                                <joint axis="0 0 1" name="rightforearm_z" range="-180 180" />
+                                <geom fromto="0.0 0.0 0.0 0.0 0.2136 0.0" size="0.018000000000000002" type="capsule" />
+                                
+                                <body name="RightHand" pos="0.0 0.2136 0.0">
+                                    <joint axis="1 0 0" name="righthand_x" range="-180 180" />
+                                    <joint axis="0 1 0" name="righthand_y" range="-180 180" />
+                                    <joint axis="0 0 1" name="righthand_z" range="-180 180" />
+                                    <geom fromto="0.0 0.0 0.0 0.0 0.0864 0.0" size="0.018000000000000002" type="capsule" />
+                                    <geom pos="0.0 0.07200000000000001 0.0" size="0.036000000000000004" type="sphere" />
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+            </body>
+            
+            <geom fromto="0.0 0.0 0.0 0.0228 0.114 0.0576" size="0.018000000000000002" type="capsule" />
+            <body name="LeftUpLeg" pos="0.0228 0.114 0.0576">
+                <joint axis="1 0 0" name="leftupleg_x" range="-180 180" />
+                <joint axis="0 1 0" name="leftupleg_y" range="-180 180" />
+                <joint axis="0 0 1" name="leftupleg_z" range="-180 180" />
+                <geom fromto="0.0 0.0 0.0 0.0 0.192 0.0" size="0.018000000000000002" type="capsule" />
+                
+                <body name="LeftLeg" pos="0.0 0.192 0.0">
+                    <joint axis="1 0 0" name="leftleg_x" range="-180 180" />
+                    <joint axis="0 1 0" name="leftleg_y" range="-180 180" />
+                    <joint axis="0 0 1" name="leftleg_z" range="-180 180" />
+                    <geom fromto="0.0 0.0 0.0 0.0 0.216 0.0" size="0.018000000000000002" type="capsule" />
+                    
+                    <body name="LeftFoot" pos="0.0 0.216 0.0">
+                        <joint axis="1 0 0" name="leftfoot_x" range="-180 180" />
+                        <joint axis="0 1 0" name="leftfoot_y" range="-180 180" />
+                        <joint axis="0 0 1" name="leftfoot_z" range="-180 180" />
+                        <geom fromto="0.0 0.0 0.0 0.0 0.12960000000000002 0.0" size="0.018000000000000002" type="capsule" />
+                        <geom pos="0.0 0.12 0.0" size="0.036000000000000004" type="sphere" />
+                    </body>
+                </body>
+            </body>
+            
+            <geom fromto="0.0 0.0 0.0 0.0228 0.114 -0.0576" size="0.018000000000000002" type="capsule" />
+            <body name="RightUpLeg" pos="0.0228 0.114 -0.0576">
+                <joint axis="1 0 0" name="rightupleg_x" range="-180 180" />
+                <joint axis="0 1 0" name="rightupleg_y" range="-180 180" />
+                <joint axis="0 0 1" name="rightupleg_z" range="-180 180" />
+                <geom fromto="0.0 0.0 0.0 0.0 0.192 0.0" size="0.018000000000000002" type="capsule" />
+                
+                <body name="RightLeg" pos="0.0 0.192 0.0">
+                    <joint axis="1 0 0" name="rightleg_x" range="-180 180" />
+                    <joint axis="0 1 0" name="rightleg_y" range="-180 180" />
+                    <joint axis="0 0 1" name="rightleg_z" range="-180 180" />
+                    <geom fromto="0.0 0.0 0.0 0.0 0.216 0.0" size="0.018000000000000002" type="capsule" />
+                    
+                    <body name="RightFoot" pos="0.0 0.216 0.0">
+                        <joint axis="1 0 0" name="rightfoot_x" range="-180 180" />
+                        <joint axis="0 1 0" name="rightfoot_y" range="-180 180" />
+                        <joint axis="0 0 1" name="rightfoot_z" range="-180 180" />
+                        <geom fromto="0.0 0.0 0.0 0.0 0.12960000000000002 0.0" size="0.018000000000000002" type="capsule" />
+                        <geom pos="0.0 0.12 0.0" size="0.036000000000000004" type="sphere" />
+                    </body>
+                </body>
+            </body>
+            
+            <geom fromto="0.0 0.0 0.0 -0.0468 0.0684 0.0" size="0.012" type="capsule" />
+            <body name="Tail" pos="-0.0468 0.0684 0.0">
+                <joint axis="1 0 0" name="tail_x" range="-180 180" />
+                <joint axis="0 1 0" name="tail_y" range="-180 180" />
+                <joint axis="0 0 1" name="tail_z" range="-180 180" />
+                <geom fromto="0.0 0.0 0.0 0.0 0.14400000000000002 0.0" size="0.012" type="capsule" />
+                
+                <body name="Tail1" pos="0.0 0.14400000000000002 0.0">
+                    <joint axis="1 0 0" name="tail1_x" range="-180 180" />
+                    <joint axis="0 1 0" name="tail1_y" range="-180 180" />
+                    <joint axis="0 0 1" name="tail1_z" range="-180 180" />
+                    <geom fromto="0.0 0.0 0.0 0.0 0.12960000000000002 0.0" size="0.012" type="capsule" />
+                </body>
+            </body>
+        </body>
+    </worldbody>
+
+    <actuator>
+        <motor gear="2000" joint="spine_x" name="spine_x" />
+        <motor gear="2000" joint="spine_y" name="spine_y" />
+        <motor gear="2000" joint="spine_z" name="spine_z" />
+        <motor gear="2000" joint="spine1_x" name="spine1_x" />
+        <motor gear="2000" joint="spine1_y" name="spine1_y" />
+        <motor gear="2000" joint="spine1_z" name="spine1_z" />
+        <motor gear="2000" joint="neck_x" name="neck_x" />
+        <motor gear="2000" joint="neck_y" name="neck_y" />
+        <motor gear="2000" joint="neck_z" name="neck_z" />
+        <motor gear="2000" joint="head_x" name="head_x" />
+        <motor gear="2000" joint="head_y" name="head_y" />
+        <motor gear="2000" joint="head_z" name="head_z" />
+        <motor gear="2000" joint="leftshoulder_x" name="leftshoulder_x" />
+        <motor gear="2000" joint="leftshoulder_y" name="leftshoulder_y" />
+        <motor gear="2000" joint="leftshoulder_z" name="leftshoulder_z" />
+        <motor gear="2000" joint="leftarm_x" name="leftarm_x" />
+        <motor gear="2000" joint="leftarm_y" name="leftarm_y" />
+        <motor gear="2000" joint="leftarm_z" name="leftarm_z" />
+        <motor gear="2000" joint="leftforearm_x" name="leftforearm_x" />
+        <motor gear="2000" joint="leftforearm_y" name="leftforearm_y" />
+        <motor gear="2000" joint="leftforearm_z" name="leftforearm_z" />
+        <motor gear="2000" joint="lefthand_x" name="lefthand_x" />
+        <motor gear="2000" joint="lefthand_y" name="lefthand_y" />
+        <motor gear="2000" joint="lefthand_z" name="lefthand_z" />
+        <motor gear="2000" joint="rightshoulder_x" name="rightshoulder_x" />
+        <motor gear="2000" joint="rightshoulder_y" name="rightshoulder_y" />
+        <motor gear="2000" joint="rightshoulder_z" name="rightshoulder_z" />
+        <motor gear="2000" joint="rightarm_x" name="rightarm_x" />
+        <motor gear="2000" joint="rightarm_y" name="rightarm_y" />
+        <motor gear="2000" joint="rightarm_z" name="rightarm_z" />
+        <motor gear="2000" joint="rightforearm_x" name="rightforearm_x" />
+        <motor gear="2000" joint="rightforearm_y" name="rightforearm_y" />
+        <motor gear="2000" joint="rightforearm_z" name="rightforearm_z" />
+        <motor gear="2000" joint="righthand_x" name="righthand_x" />
+        <motor gear="2000" joint="righthand_y" name="righthand_y" />
+        <motor gear="2000" joint="righthand_z" name="righthand_z" />
+        <motor gear="2000" joint="leftupleg_x" name="leftupleg_x" />
+        <motor gear="2000" joint="leftupleg_y" name="leftupleg_y" />
+        <motor gear="2000" joint="leftupleg_z" name="leftupleg_z" />
+        <motor gear="2000" joint="leftleg_x" name="leftleg_x" />
+        <motor gear="2000" joint="leftleg_y" name="leftleg_y" />
+        <motor gear="2000" joint="leftleg_z" name="leftleg_z" />
+        <motor gear="2000" joint="leftfoot_x" name="leftfoot_x" />
+        <motor gear="2000" joint="leftfoot_y" name="leftfoot_y" />
+        <motor gear="2000" joint="leftfoot_z" name="leftfoot_z" />
+        <motor gear="2000" joint="rightupleg_x" name="rightupleg_x" />
+        <motor gear="2000" joint="rightupleg_y" name="rightupleg_y" />
+        <motor gear="2000" joint="rightupleg_z" name="rightupleg_z" />
+        <motor gear="2000" joint="rightleg_x" name="rightleg_x" />
+        <motor gear="2000" joint="rightleg_y" name="rightleg_y" />
+        <motor gear="2000" joint="rightleg_z" name="rightleg_z" />
+        <motor gear="2000" joint="rightfoot_x" name="rightfoot_x" />
+        <motor gear="2000" joint="rightfoot_y" name="rightfoot_y" />
+        <motor gear="2000" joint="rightfoot_z" name="rightfoot_z" />
+        <motor gear="2000" joint="tail_x" name="tail_x" />
+        <motor gear="2000" joint="tail_y" name="tail_y" />
+        <motor gear="2000" joint="tail_z" name="tail_z" />
+        <motor gear="2000" joint="tail1_x" name="tail1_x" />
+        <motor gear="2000" joint="tail1_y" name="tail1_y" />
+        <motor gear="2000" joint="tail1_z" name="tail1_z" />
+    </actuator>
+</mujoco>

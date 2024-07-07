@@ -80,8 +80,8 @@ class Humanoid(BaseTask):
         rigid_body_state = self.gym.acquire_rigid_body_state_tensor(self.sim)
         contact_force_tensor = self.gym.acquire_net_contact_force_tensor(self.sim)
 
-        sensors_per_env = 2
-        self.vec_sensor_tensor = gymtorch.wrap_tensor(sensor_tensor).view(self.num_envs, sensors_per_env * 6)
+        # sensors_per_env = 2
+        # self.vec_sensor_tensor = gymtorch.wrap_tensor(sensor_tensor).view(self.num_envs, sensors_per_env * 6)
 
         dof_force_tensor = self.gym.acquire_dof_force_tensor(self.sim)
         self.dof_force_tensor = gymtorch.wrap_tensor(dof_force_tensor).view(self.num_envs, self.num_dof)
@@ -220,6 +220,13 @@ class Humanoid(BaseTask):
             self._dof_obs_size = 78
             self._num_actions = 31
             self._num_obs = 1 + 17 * (3 + 6 + 3 + 3) - 3
+
+        elif asset_file == "mjcf/dog_fbx_scaled.xml":
+            self._dof_body_ids = [1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14, 16, 17, 18, 20, 21, 22, 24, 25]
+            self._dof_offsets = [0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60]
+            self._dof_obs_size = 120
+            self._num_actions = 60
+            self._num_obs = 313
 
         else:
             print("Unsupported character config file: {s}".format(asset_file))
@@ -557,7 +564,7 @@ class Humanoid(BaseTask):
 ###=========================jit functions=========================###
 #####################################################################
 
-@torch.jit.script
+# @torch.jit.script
 def dof_to_obs(pose, dof_obs_size, dof_offsets):
     # type: (Tensor, int, List[int]) -> Tensor
     joint_obs_size = 6
