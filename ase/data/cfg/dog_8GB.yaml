@@ -24,8 +24,8 @@ env:
     assetFileName: "mjcf/dog_fbx_scaled.xml"
 
   plane:
-    staticFriction: 1.0
-    dynamicFriction: 1.0
+    staticFriction: 10.0
+    dynamicFriction: 10.0
     restitution: 0.0
 
 sim:
