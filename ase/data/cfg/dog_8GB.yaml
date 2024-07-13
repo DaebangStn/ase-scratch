@@ -17,7 +17,7 @@ env:
   keyBodies: ["Head", "LeftHand", "RightHand", "RightFoot", "LeftFoot"]
   contactBodies: ["LeftHand", "RightHand", "RightFoot", "LeftFoot"]
   terminationHeight: 0.15
-  enableEarlyTermination: True
+  enableEarlyTermination: False
 
   asset:
     assetRoot: "ase/data/assets"
