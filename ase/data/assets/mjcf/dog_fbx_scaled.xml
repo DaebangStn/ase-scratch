@@ -4,7 +4,7 @@
     
     <default>
         <joint armature="0.01" damping="20" limited="true" stiffness="200" type="hinge" />
-        <geom conaffinity="1" condim="3" contype="1" density="100" rgba=".8 .6 .4 1" />
+        <geom conaffinity="1" condim="3" contype="1" density="1" rgba=".8 .6 .4 1" />
         <motor ctrllimited="true" ctrlrange="-180 180" />
     </default>
 
@@ -169,65 +169,65 @@
     </worldbody>
 
     <actuator>
-        <motor gear="2000" joint="spine_x" name="spine_x" />
-        <motor gear="2000" joint="spine_y" name="spine_y" />
-        <motor gear="2000" joint="spine_z" name="spine_z" />
-        <motor gear="2000" joint="spine1_x" name="spine1_x" />
-        <motor gear="2000" joint="spine1_y" name="spine1_y" />
-        <motor gear="2000" joint="spine1_z" name="spine1_z" />
-        <motor gear="2000" joint="neck_x" name="neck_x" />
-        <motor gear="2000" joint="neck_y" name="neck_y" />
-        <motor gear="2000" joint="neck_z" name="neck_z" />
-        <motor gear="2000" joint="head_x" name="head_x" />
-        <motor gear="2000" joint="head_y" name="head_y" />
-        <motor gear="2000" joint="head_z" name="head_z" />
-        <motor gear="2000" joint="leftshoulder_x" name="leftshoulder_x" />
-        <motor gear="2000" joint="leftshoulder_y" name="leftshoulder_y" />
-        <motor gear="2000" joint="leftshoulder_z" name="leftshoulder_z" />
-        <motor gear="2000" joint="leftarm_x" name="leftarm_x" />
-        <motor gear="2000" joint="leftarm_y" name="leftarm_y" />
-        <motor gear="2000" joint="leftarm_z" name="leftarm_z" />
-        <motor gear="2000" joint="leftforearm_x" name="leftforearm_x" />
-        <motor gear="2000" joint="leftforearm_y" name="leftforearm_y" />
-        <motor gear="2000" joint="leftforearm_z" name="leftforearm_z" />
-        <motor gear="2000" joint="lefthand_x" name="lefthand_x" />
-        <motor gear="2000" joint="lefthand_y" name="lefthand_y" />
-        <motor gear="2000" joint="lefthand_z" name="lefthand_z" />
-        <motor gear="2000" joint="rightshoulder_x" name="rightshoulder_x" />
-        <motor gear="2000" joint="rightshoulder_y" name="rightshoulder_y" />
-        <motor gear="2000" joint="rightshoulder_z" name="rightshoulder_z" />
-        <motor gear="2000" joint="rightarm_x" name="rightarm_x" />
-        <motor gear="2000" joint="rightarm_y" name="rightarm_y" />
-        <motor gear="2000" joint="rightarm_z" name="rightarm_z" />
-        <motor gear="2000" joint="rightforearm_x" name="rightforearm_x" />
-        <motor gear="2000" joint="rightforearm_y" name="rightforearm_y" />
-        <motor gear="2000" joint="rightforearm_z" name="rightforearm_z" />
-        <motor gear="2000" joint="righthand_x" name="righthand_x" />
-        <motor gear="2000" joint="righthand_y" name="righthand_y" />
-        <motor gear="2000" joint="righthand_z" name="righthand_z" />
-        <motor gear="2000" joint="leftupleg_x" name="leftupleg_x" />
-        <motor gear="2000" joint="leftupleg_y" name="leftupleg_y" />
-        <motor gear="2000" joint="leftupleg_z" name="leftupleg_z" />
-        <motor gear="2000" joint="leftleg_x" name="leftleg_x" />
-        <motor gear="2000" joint="leftleg_y" name="leftleg_y" />
-        <motor gear="2000" joint="leftleg_z" name="leftleg_z" />
-        <motor gear="2000" joint="leftfoot_x" name="leftfoot_x" />
-        <motor gear="2000" joint="leftfoot_y" name="leftfoot_y" />
-        <motor gear="2000" joint="leftfoot_z" name="leftfoot_z" />
-        <motor gear="2000" joint="rightupleg_x" name="rightupleg_x" />
-        <motor gear="2000" joint="rightupleg_y" name="rightupleg_y" />
-        <motor gear="2000" joint="rightupleg_z" name="rightupleg_z" />
-        <motor gear="2000" joint="rightleg_x" name="rightleg_x" />
-        <motor gear="2000" joint="rightleg_y" name="rightleg_y" />
-        <motor gear="2000" joint="rightleg_z" name="rightleg_z" />
-        <motor gear="2000" joint="rightfoot_x" name="rightfoot_x" />
-        <motor gear="2000" joint="rightfoot_y" name="rightfoot_y" />
-        <motor gear="2000" joint="rightfoot_z" name="rightfoot_z" />
-        <motor gear="2000" joint="tail_x" name="tail_x" />
-        <motor gear="2000" joint="tail_y" name="tail_y" />
-        <motor gear="2000" joint="tail_z" name="tail_z" />
-        <motor gear="2000" joint="tail1_x" name="tail1_x" />
-        <motor gear="2000" joint="tail1_y" name="tail1_y" />
-        <motor gear="2000" joint="tail1_z" name="tail1_z" />
+        <motor gear="456" joint="spine_x" name="spine_x" />
+        <motor gear="456" joint="spine_y" name="spine_y" />
+        <motor gear="456" joint="spine_z" name="spine_z" />
+        <motor gear="456" joint="spine1_x" name="spine1_x" />
+        <motor gear="456" joint="spine1_y" name="spine1_y" />
+        <motor gear="456" joint="spine1_z" name="spine1_z" />
+        <motor gear="456" joint="neck_x" name="neck_x" />
+        <motor gear="456" joint="neck_y" name="neck_y" />
+        <motor gear="456" joint="neck_z" name="neck_z" />
+        <motor gear="456" joint="head_x" name="head_x" />
+        <motor gear="456" joint="head_y" name="head_y" />
+        <motor gear="456" joint="head_z" name="head_z" />
+        <motor gear="456" joint="leftshoulder_x" name="leftshoulder_x" />
+        <motor gear="456" joint="leftshoulder_y" name="leftshoulder_y" />
+        <motor gear="456" joint="leftshoulder_z" name="leftshoulder_z" />
+        <motor gear="456" joint="leftarm_x" name="leftarm_x" />
+        <motor gear="456" joint="leftarm_y" name="leftarm_y" />
+        <motor gear="456" joint="leftarm_z" name="leftarm_z" />
+        <motor gear="456" joint="leftforearm_x" name="leftforearm_x" />
+        <motor gear="456" joint="leftforearm_y" name="leftforearm_y" />
+        <motor gear="456" joint="leftforearm_z" name="leftforearm_z" />
+        <motor gear="456" joint="lefthand_x" name="lefthand_x" />
+        <motor gear="456" joint="lefthand_y" name="lefthand_y" />
+        <motor gear="456" joint="lefthand_z" name="lefthand_z" />
+        <motor gear="456" joint="rightshoulder_x" name="rightshoulder_x" />
+        <motor gear="456" joint="rightshoulder_y" name="rightshoulder_y" />
+        <motor gear="456" joint="rightshoulder_z" name="rightshoulder_z" />
+        <motor gear="456" joint="rightarm_x" name="rightarm_x" />
+        <motor gear="456" joint="rightarm_y" name="rightarm_y" />
+        <motor gear="456" joint="rightarm_z" name="rightarm_z" />
+        <motor gear="456" joint="rightforearm_x" name="rightforearm_x" />
+        <motor gear="456" joint="rightforearm_y" name="rightforearm_y" />
+        <motor gear="456" joint="rightforearm_z" name="rightforearm_z" />
+        <motor gear="456" joint="righthand_x" name="righthand_x" />
+        <motor gear="456" joint="righthand_y" name="righthand_y" />
+        <motor gear="456" joint="righthand_z" name="righthand_z" />
+        <motor gear="456" joint="leftupleg_x" name="leftupleg_x" />
+        <motor gear="456" joint="leftupleg_y" name="leftupleg_y" />
+        <motor gear="456" joint="leftupleg_z" name="leftupleg_z" />
+        <motor gear="456" joint="leftleg_x" name="leftleg_x" />
+        <motor gear="456" joint="leftleg_y" name="leftleg_y" />
+        <motor gear="456" joint="leftleg_z" name="leftleg_z" />
+        <motor gear="456" joint="leftfoot_x" name="leftfoot_x" />
+        <motor gear="456" joint="leftfoot_y" name="leftfoot_y" />
+        <motor gear="456" joint="leftfoot_z" name="leftfoot_z" />
+        <motor gear="456" joint="rightupleg_x" name="rightupleg_x" />
+        <motor gear="456" joint="rightupleg_y" name="rightupleg_y" />
+        <motor gear="456" joint="rightupleg_z" name="rightupleg_z" />
+        <motor gear="456" joint="rightleg_x" name="rightleg_x" />
+        <motor gear="456" joint="rightleg_y" name="rightleg_y" />
+        <motor gear="456" joint="rightleg_z" name="rightleg_z" />
+        <motor gear="456" joint="rightfoot_x" name="rightfoot_x" />
+        <motor gear="456" joint="rightfoot_y" name="rightfoot_y" />
+        <motor gear="456" joint="rightfoot_z" name="rightfoot_z" />
+        <motor gear="456" joint="tail_x" name="tail_x" />
+        <motor gear="456" joint="tail_y" name="tail_y" />
+        <motor gear="456" joint="tail_z" name="tail_z" />
+        <motor gear="456" joint="tail1_x" name="tail1_x" />
+        <motor gear="456" joint="tail1_y" name="tail1_y" />
+        <motor gear="456" joint="tail1_z" name="tail1_z" />
     </actuator>
 </mujoco>

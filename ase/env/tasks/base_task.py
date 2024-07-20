@@ -112,6 +112,7 @@ class BaseTask():
             sim_params.gravity.x = 0
             sim_params.gravity.y = 0
             sim_params.gravity.z = -9.81
+            # sim_params.gravity.z = -0.0981
             return 2
         return 1
 
